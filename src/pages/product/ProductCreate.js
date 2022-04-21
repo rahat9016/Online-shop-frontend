@@ -18,7 +18,7 @@ const initialState = {
   quantity: "",
   images: [],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
-  brands: ["Apple", "HP", "Asus", "Acer", "Lenovo"],
+  brands: ["Apple", "HP", "Asus", "Acer", "Lenovo", "Microsoft", "Samsung"],
   color: "",
   brand: "",
 };
@@ -81,7 +81,7 @@ const ProductCreate = () => {
             <h4>Product create</h4>
           )}
           <hr />
-          {JSON.stringify(values.images)}
+
           <div className="p-3">
             <FileUpload
               values={values}

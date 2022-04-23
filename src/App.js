@@ -21,6 +21,7 @@ import Login from "./pages/auth/Login";
 import Resister from "./pages/auth/Resister";
 import ResisterComplete from "./pages/auth/ResisterComplete";
 import Home from "./pages/Home";
+import Product from "./pages/Product";
 import AllProducts from "./pages/product/AllProducts";
 import ProductCreate from "./pages/product/ProductCreate";
 import ProductUpdate from "./pages/product/ProductUpdate";
@@ -107,6 +108,9 @@ function App() {
         <AdminRoute exact path="/admin/product/:slug">
           <ProductUpdate />
         </AdminRoute>
+        <Route exact path="/product/:slug">
+          <Product />
+        </Route>
       </Switch>
     </div>
   );

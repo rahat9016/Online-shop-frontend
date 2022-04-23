@@ -7,7 +7,6 @@ import laptop from "../../images/apple.jpg";
 const ProductCard = ({ product }) => {
   //Destructure Product
   const { title, images, description, slug } = product;
-  console.log(product);
   return (
     <Card
       cover={

@@ -1,3 +1,5 @@
-/* body {
-  background-color: rgb(20, 20, 20); 
-} */
+.slide img,
+.card-image {
+  height: 450px;
+  object-fit: cover;
+}

@@ -116,7 +116,6 @@ const ProductUpdate = () => {
           ) : (
             <h4>Product Update</h4>
           )}
-          {JSON.stringify(values)}
           <FileUpload
             values={values}
             setValues={setValues}

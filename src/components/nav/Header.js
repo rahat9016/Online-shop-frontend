@@ -12,6 +12,7 @@ import "firebase/compat/firestore";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import Search from "../forms/Search";
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
@@ -70,6 +71,9 @@ const Header = () => {
             </Item>
           </SubMenu>
         )}
+        <span className="float-right p-1">
+          <Search />
+        </span>
       </Menu>
     </div>
   );

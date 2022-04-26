@@ -20,11 +20,13 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import Login from "./pages/auth/Login";
 import Resister from "./pages/auth/Resister";
 import ResisterComplete from "./pages/auth/ResisterComplete";
+import CategoryHome from "./pages/category/CategoryHome";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import AllProducts from "./pages/product/AllProducts";
 import ProductCreate from "./pages/product/ProductCreate";
 import ProductUpdate from "./pages/product/ProductUpdate";
+import SubHome from "./pages/sub/SubHome";
 import History from "./pages/user/History";
 import Password from "./pages/user/Password";
 import Wishlist from "./pages/user/Wishlist";
@@ -34,7 +36,6 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        console.log(user.email);
         const idTokenResult = await user.getIdTokenResult();
         currentUser(idTokenResult.token)
           .then((res) => {
@@ -110,6 +111,12 @@ function App() {
         </AdminRoute>
         <Route exact path="/product/:slug">
           <Product />
+        </Route>
+        <Route exact path="/category/:slug">
+          <CategoryHome />
+        </Route>
+        <Route exact path="/sub/:slug">
+          <SubHome />
         </Route>
       </Switch>
     </div>

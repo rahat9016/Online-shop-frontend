@@ -2,7 +2,7 @@ import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth, googleAuthProvider } from "../../firebase";
 import { createOrUpdateUser } from "../../functions/auth";
@@ -15,18 +15,36 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => ({ ...state }));
 
+  const location = useLocation();
+  console.log(location.state);
   useEffect(() => {
-    if (user && user.token) {
-      history.push("/");
+    let intended = location.state;
+    if (intended) {
+      console.log("IF existing");
+      return;
+    } else {
+      console.log("else existing");
+      if (user && user.token) {
+        history.push("/");
+      }
     }
   }, [user, history]);
+
   const roleBaseRedirect = (res) => {
-    if (res.data.role === "admin") {
-      history.push("/admin/dashboard");
+    let intended = location.state;
+    if (intended) {
+      history.push(intended.from);
+      console.log("IF existing");
     } else {
-      history.push("/user/history");
+      console.log("Else  existing");
+      if (res.data.role === "admin") {
+        history.push("/admin/dashboard");
+      } else {
+        history.push("/user/history");
+      }
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

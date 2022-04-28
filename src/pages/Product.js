@@ -21,9 +21,8 @@ const Product = () => {
         (ele) => ele.postBy.toString() === user._id.toString()
       );
       existingRatingObject && setStar(existingRatingObject.star);
-      console.log(existingRatingObject.star);
     }
-  }, []);
+  }, [product, user]);
   const loadSingleProduct = () => {
     getProduct(slug)
       .then((res) => {
@@ -63,7 +62,7 @@ const Product = () => {
           <div className="row pb-5">
             {related.length ? (
               related.map((r) => (
-                <div className="col-md-4">
+                <div key={r._id} className="col-md-4">
                   <ProductCard key={r._id} product={r} />
                 </div>
               ))

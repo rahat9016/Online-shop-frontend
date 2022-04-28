@@ -2,7 +2,7 @@ import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth, googleAuthProvider } from "../../firebase";
 import { createOrUpdateUser } from "../../functions/auth";
@@ -11,14 +11,13 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [email, setEmail] = useState("rahat.official.info9016@gmail.com"); //rahat.official.info9016@gmail.com
-  const [password, setPassword] = useState("rahat90"); //rahat9016
+  const [password, setPassword] = useState("rahat9016"); //rahat9016
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => ({ ...state }));
 
-  const location = useLocation();
-  console.log(location.state);
+  // console.log(history?.location?.state?.from);
   useEffect(() => {
-    let intended = location.state;
+    let intended = history?.location?.state;
     if (intended) {
       console.log("IF existing");
       return;
@@ -29,14 +28,13 @@ const Login = () => {
       }
     }
   }, [user, history]);
-
+  console.log(history?.location?.state?.from);
   const roleBaseRedirect = (res) => {
-    let intended = location.state;
+    let intended = history?.location?.state;
+    console.log(intended);
     if (intended) {
-      history.push(intended.from);
-      console.log("IF existing");
+      history.push(intended?.from);
     } else {
-      console.log("Else  existing");
       if (res.data.role === "admin") {
         history.push("/admin/dashboard");
       } else {
@@ -44,7 +42,6 @@ const Login = () => {
       }
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

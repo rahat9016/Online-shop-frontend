@@ -7,7 +7,7 @@ import { ShowAverage } from "../../functions/rating";
 import laptop from "../../images/apple.jpg";
 const ProductCard = ({ product }) => {
   //Destructure Product
-  const { title, images, description, slug } = product;
+  const { title, images, description, slug, price } = product;
   return (
     <>
       {product && product.ratings && product.ratings.length > 0 ? (

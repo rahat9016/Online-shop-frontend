@@ -7,7 +7,6 @@ const Search = () => {
   const history = useHistory();
   const { search } = useSelector((state) => ({ ...state }));
   const { text } = search;
-  console.log(search);
   const handleChange = (e) => {
     dispatch({
       type: "SEARCH_QUERY",

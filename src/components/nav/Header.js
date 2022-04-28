@@ -2,6 +2,7 @@ import {
   AppstoreOutlined,
   LoginOutlined,
   SettingOutlined,
+  ShoppingOutlined,
   UserAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -38,6 +39,9 @@ const Header = () => {
         <Item key="home" icon={<AppstoreOutlined />}>
           <Link to="/">Home</Link>
         </Item>
+        <Item key="shop" icon={<ShoppingOutlined />}>
+          <Link to="/shop">Shop</Link>
+        </Item>
         {!user && (
           <Item className="ml-auto" key="resister" icon={<UserAddOutlined />}>
             <Link to="/resister">Resister</Link>
@@ -51,27 +55,28 @@ const Header = () => {
 
         {user && (
           <SubMenu
+            key="subMenu"
             className="ml-auto"
             icon={<SettingOutlined />}
             title={user.email && user.email.split("@")[0]}
           >
             {user && user.role === "subscriber" && (
-              <Item>
+              <Item key="user/history">
                 <Link to="/user/history">Dashboard</Link>
               </Item>
             )}
             {user && user.role === "admin" && (
-              <Item>
+              <Item key="admin/dashboard">
                 <Link to="/admin/dashboard">Dashboard</Link>
               </Item>
             )}
-            <Item key="setting:2">Option 2</Item>
+
             <Item key="logout" icon={<LoginOutlined />} onClick={logout}>
               Logout
             </Item>
           </SubMenu>
         )}
-        <span className="float-right p-1">
+        <span className=" p-1 ">
           <Search />
         </span>
       </Menu>

@@ -26,6 +26,7 @@ import Product from "./pages/Product";
 import AllProducts from "./pages/product/AllProducts";
 import ProductCreate from "./pages/product/ProductCreate";
 import ProductUpdate from "./pages/product/ProductUpdate";
+import Shop from "./pages/Shop";
 import SubHome from "./pages/sub/SubHome";
 import History from "./pages/user/History";
 import Password from "./pages/user/Password";
@@ -117,6 +118,9 @@ function App() {
         </Route>
         <Route exact path="/sub/:slug">
           <SubHome />
+        </Route>
+        <Route exact path="/shop">
+          <Shop />
         </Route>
       </Switch>
     </div>

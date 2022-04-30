@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SideDrawer from "./components/drawer/SideDrawer";
 import Header from "./components/nav/Header";
 import AdminRoute from "./components/routes/AdminRoute";
 import UserRoute from "./components/routes/UserRoute";
@@ -20,6 +21,7 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import Login from "./pages/auth/Login";
 import Resister from "./pages/auth/Resister";
 import ResisterComplete from "./pages/auth/ResisterComplete";
+import Cart from "./pages/Cart";
 import CategoryHome from "./pages/category/CategoryHome";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
@@ -60,6 +62,7 @@ function App() {
   return (
     <div>
       <Header />
+      <SideDrawer />
       <ToastContainer />
       <Switch>
         <Route exact path="/">
@@ -121,6 +124,9 @@ function App() {
         </Route>
         <Route exact path="/shop">
           <Shop />
+        </Route>
+        <Route exact path="/cart">
+          <Cart />
         </Route>
       </Switch>
     </div>

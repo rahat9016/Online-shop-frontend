@@ -2,11 +2,12 @@ import {
   AppstoreOutlined,
   LoginOutlined,
   SettingOutlined,
+  ShoppingCartOutlined,
   ShoppingOutlined,
   UserAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Menu } from "antd";
+import { Badge, Menu } from "antd";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -20,7 +21,7 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, cart } = useSelector((state) => ({ ...state }));
   const history = useHistory();
   const handleClick = (e) => {
     setCurrent(e.key);
@@ -41,6 +42,9 @@ const Header = () => {
         </Item>
         <Item key="shop" icon={<ShoppingOutlined />}>
           <Link to="/shop">Shop</Link>
+        </Item>
+        <Item key="cart" icon={<ShoppingCartOutlined />}>
+          <Link to="/cart"><Badge count={cart.length} offset={[9,0]}>Cart </Badge></Link>
         </Item>
         {!user && (
           <Item className="ml-auto" key="resister" icon={<UserAddOutlined />}>

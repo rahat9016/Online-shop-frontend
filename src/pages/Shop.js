@@ -56,11 +56,10 @@ const Shop = () => {
   };
   // 1 Load products by default page
   const loadAllProducts = () => {
-    setLoading(true);
     getProductByCount(12)
       .then((res) => {
         setProducts(res.data);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch((error) => {
         setLoading(false);

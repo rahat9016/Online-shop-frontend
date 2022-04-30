@@ -1,13 +1,45 @@
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Card } from "antd";
+import { Card, Tooltip } from "antd";
 import Meta from "antd/lib/card/Meta";
-import React from "react";
+import _ from "lodash";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { ShowAverage } from "../../functions/rating";
 import laptop from "../../images/apple.jpg";
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+
+  const [tooltip, setTooltip] = useState("Click to add");
   //Destructure Product
-  const { title, images, description, slug, price } = product;
+  const { title, images, description, slug } = product;
+  //Cart handler
+  const handleAddToCart = () => {
+    //Create cart array
+    let cart = [];
+    if (typeof window !== "undefined") {
+      //if cart is in the local storage GET it
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      cart.push({
+        ...product,
+        count: 1,
+      });
+      let unique = _.uniqWith(cart, _.isEqual);
+      localStorage.setItem("cart", JSON.stringify(unique));
+      setTooltip("Added");
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: unique,
+      });
+      dispatch({
+        type: "SET_VISIBLE",
+        payload: true,
+      });
+    }
+  };
+
   return (
     <>
       {product && product.ratings && product.ratings.length > 0 ? (
@@ -29,11 +61,14 @@ const ProductCard = ({ product }) => {
             <EyeOutlined className="text-warning" />
             <br /> View Product
           </Link>,
-          <>
-            <ShoppingCartOutlined className="text-danger" />
-            <br />
-            Add to Card
-          </>,
+          <Tooltip title={tooltip}>
+            <a onClick={handleAddToCart} href>
+              <ShoppingCartOutlined className="text-danger" />
+              <br />
+              Add to Card
+            </a>
+            ,
+          </Tooltip>,
         ]}
       >
         <Meta

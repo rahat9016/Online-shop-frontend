@@ -2,7 +2,7 @@ import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth, googleAuthProvider } from "../../firebase";
 import { createOrUpdateUser } from "../../functions/auth";
@@ -10,27 +10,27 @@ import { createOrUpdateUser } from "../../functions/auth";
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [email, setEmail] = useState("rahat.official.info9016@gmail.com"); //rahat.official.info9016@gmail.com
+  const location = useLocation();
+  const [email, setEmail] = useState(
+    "rahat.official.info9016@gmail.com bombusbd9014@gmail.com"
+  ); //rahat.official.info9016@gmail.com
   const [password, setPassword] = useState("rahat9016"); //rahat9016
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => ({ ...state }));
 
   // console.log(history?.location?.state?.from);
   useEffect(() => {
-    let intended = history?.location?.state;
+    let intended = location?.state;
     if (intended) {
-      console.log("IF existing");
       return;
     } else {
-      console.log("else existing");
       if (user && user.token) {
         history.push("/");
       }
     }
-  }, [user, history]);
-  console.log(history?.location?.state?.from);
+  }, [user, history, location]);
   const roleBaseRedirect = (res) => {
-    let intended = history?.location?.state;
+    let intended = location?.state;
     console.log(intended);
     if (intended) {
       history.push(intended?.from);

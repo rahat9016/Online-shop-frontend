@@ -1,3 +1,4 @@
+import "antd/dist/antd.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -9,7 +10,6 @@ import App from "./App";
 import "./index.css";
 import rootReducer from "./reducers";
 import reportWebVitals from "./reportWebVitals";
-
 const store = createStore(rootReducer, composeWithDevTools());
 ReactDOM.render(
   <React.StrictMode>

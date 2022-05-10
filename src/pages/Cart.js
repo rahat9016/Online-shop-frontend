@@ -1,16 +1,40 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
+import { userCart } from "../functions/user";
 
 const Cart = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { user, cart } = useSelector((state) => ({ ...state }));
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
     }, 0);
   };
-  const saveOrderToDb = () => {};
+  const saveOrderToDb = () => {
+    userCart(cart, user.token)
+      .then((res) => {
+        if (res.data.ok) history.push("checkout");
+      })
+      .catch((error) => {
+        console.log("Cart save error ", error);
+      });
+  };
+  const saveCaseOrderToDb = () => {
+    dispatch({
+      type: "COD",
+      payload: true,
+    });
+    userCart(cart, user.token)
+      .then((res) => {
+        if (res.data.ok) history.push("checkout");
+      })
+      .catch((error) => {
+        console.log("Cart save error ", error);
+      });
+  };
   const showCartItems = () => (
     <table className="table table-bordered">
       <thead className="thead-light">
@@ -58,13 +82,23 @@ const Cart = () => {
           Total: <b>${getTotal()}</b>
           <hr />
           {user ? (
-            <button
-              className="btn btn-sm btn-primary mt-2"
-              onClick={saveOrderToDb}
-              disabled={!cart.length}
-            >
-              Proceed to Checkout
-            </button>
+            <>
+              <button
+                className="btn btn-sm btn-primary mt-2"
+                onClick={saveOrderToDb}
+                disabled={!cart.length}
+              >
+                Proceed to Checkout
+              </button>
+              <br />
+              <button
+                className="btn btn-sm btn-warning mt-2"
+                onClick={saveCaseOrderToDb}
+                disabled={!cart.length}
+              >
+                Pay case on Delivery
+              </button>
+            </>
           ) : (
             <button className="btn btn-sm btn-danger mt-2">
               <Link

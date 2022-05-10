@@ -1,44 +1,38 @@
 import React, { useEffect, useState } from "react";
-import AdminProductCard from "../../components/cards/AdminProductCard";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import AdminNav from "../../components/nav/AdminNav";
-import { getProductByCount } from "../../functions/product";
-
+import Orders from "../../components/orders/Orders";
+import { changeStatus, getOrders } from "../../functions/admin";
 const AdminDashboard = () => {
-  const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    loadingAllProducts();
-  }, []);
+  const [orders, setOrders] = useState([]);
+  const { user } = useSelector((state) => ({ ...state }));
 
-  const loadingAllProducts = () => {
-    setLoading(true);
-    getProductByCount(100)
-      .then((res) => {
-        setProducts(res.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-      });
+  useEffect(() => {
+    loadOrders();
+  }, []);
+  const loadOrders = () => {
+    getOrders(user.token).then((res) => {
+      setOrders(res.data);
+    });
+  };
+  const handleStatusChange = (orderId, orderStatus) => {
+    changeStatus(orderId, orderStatus, user.token).then((res) => {
+      console.log(res);
+      toast.success("Status updated");
+      loadOrders();
+    });
   };
   return (
     <>
-      <div className="row">
-        <div className="container-fluid">
+      <div className=" container-fluid">
+        <div className="row">
           <div className="col-md-2">
             <AdminNav />
           </div>
-
-          <div className="col">
-            {loading ? <h4>Loading...</h4> : <h4>All Products</h4>}
-            <div className="row">
-              {products.map((product) => (
-                <div key={product._id} className="col-md-4">
-                  <AdminProductCard product={product} />
-                </div>
-              ))}
-            </div>
+          <div className="col-md-10">
+            <h4>Admin Dashboard</h4>
+            <Orders orders={orders} handleStatusChange={handleStatusChange} />
           </div>
         </div>
       </div>

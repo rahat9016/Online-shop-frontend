@@ -1,14 +1,89 @@
-import React from "react";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
 import UserNav from "../../components/nav/UserNav";
-
+import { getUserOrders } from "../../functions/user";
 const History = () => {
+  const [orders, setOrders] = useState([]);
+  const { user } = useSelector((state) => ({ ...state }));
+
+  useEffect(() => {
+    loadUserOrders();
+  }, []);
+  const loadUserOrders = () => {
+    getUserOrders(user.token).then((res) => {
+      setOrders(res.data);
+    });
+  };
+  const showOrderInTable = (order) => (
+    <table className="table table-bordered">
+      <thead className="thead-light">
+        <tr>
+          <th scope="col ">Title</th>
+          <th scope="col ">Price</th>
+          <th scope="col ">Brand</th>
+          <th scope="col ">Color</th>
+          <th scope="col ">Count</th>
+          <th scope="col ">Shipping</th>
+        </tr>
+      </thead>
+      <tbody>
+        {order.products.map((p, i) => (
+          <tr key={i}>
+            <td>
+              <b>{p.product.title}</b>
+            </td>
+            <td>
+              <b>{p.product.price}</b>
+            </td>
+            <td>
+              <b>{p.product.brand}</b>
+            </td>
+            <td>
+              <b>{p.color}</b>
+            </td>
+            <td>
+              <b>{p.count}</b>
+            </td>
+            <td>
+              <b>
+                {p.product.shipping === "Yes" ? (
+                  <CheckCircleOutlined style={{ color: "green" }} />
+                ) : (
+                  <CloseCircleOutlined style={{ color: "red" }} />
+                )}
+              </b>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+  // const showDownloadLink = () => <PDFViewer />;
+  const showEachOrders = () =>
+    orders.reverse().map((order, i) => (
+      <div key={i} className="m-5 p-3  card">
+        <ShowPaymentInfo order={order} />
+
+        {showOrderInTable(order)}
+        <div className="row">
+          <div className="col"></div>
+        </div>
+      </div>
+    ));
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-2">
           <UserNav />
         </div>
-        <div className="col">user page</div>
+        <div className="col text-center">
+          <h4>
+            {orders.length ? "User purchase orders" : " no purchase order"}
+          </h4>
+          {showEachOrders()}
+        </div>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ const NewArrivals = () => {
   const [page, setPage] = useState(1);
   useEffect(() => {
     loadAllProduct();
-  }, [page]);
+  }, []);
 
   useEffect(() => {
     getProductCount()

@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
 
   const [tooltip, setTooltip] = useState("Click to add");
   //Destructure Product
-  const { title, images, description, slug } = product;
+  const { title, images, description, slug, quantity } = product;
   //Cart handler
   const handleAddToCart = () => {
     //Create cart array
@@ -62,10 +62,10 @@ const ProductCard = ({ product }) => {
             <br /> View Product
           </Link>,
           <Tooltip title={tooltip}>
-            <a onClick={handleAddToCart} href>
+            <a onClick={handleAddToCart} disabled={quantity < 1}>
               <ShoppingCartOutlined className="text-danger" />
               <br />
-              Add to Card
+              {quantity < 1 ? "Out of stoke" : "Add to Card"}
             </a>
             ,
           </Tooltip>,

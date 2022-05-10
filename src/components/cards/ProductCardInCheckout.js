@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import laptop from "../../images/apple.jpg";
 const ProductCardInCheckout = ({ p }) => {
-  console.log(p);
   const dispatch = useDispatch();
   const colors = ["Black", "Brown", "Silver", "White", "Blue"];
 

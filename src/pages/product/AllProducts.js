@@ -40,8 +40,8 @@ const AllProducts = () => {
   };
   return (
     <>
-      <div className="row">
-        <div className="container-fluid">
+      <div className="container-fluid">
+        <div className="  row">
           <div className="col-md-2">
             <AdminNav />
           </div>

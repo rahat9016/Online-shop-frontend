@@ -1,4 +1,3 @@
-import "antd/dist/antd.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "mdb-ui-kit/css/mdb.min.css";
 import { useEffect } from "react";
@@ -23,7 +22,10 @@ import Resister from "./pages/auth/Resister";
 import ResisterComplete from "./pages/auth/ResisterComplete";
 import Cart from "./pages/Cart";
 import CategoryHome from "./pages/category/CategoryHome";
+import Checkout from "./pages/Checkout";
+import CreateCouponPage from "./pages/coupon/CreateCouponPage";
 import Home from "./pages/Home";
+import Payment from "./pages/Payment";
 import Product from "./pages/Product";
 import AllProducts from "./pages/product/AllProducts";
 import ProductCreate from "./pages/product/ProductCreate";
@@ -128,6 +130,15 @@ function App() {
         <Route exact path="/cart">
           <Cart />
         </Route>
+        <UserRoute exact path="/checkout">
+          <Checkout />
+        </UserRoute>
+        <UserRoute exact path="/payment">
+          <Payment />
+        </UserRoute>
+        <AdminRoute exact path="/admin/coupon">
+          <CreateCouponPage />
+        </AdminRoute>
       </Switch>
     </div>
   );
